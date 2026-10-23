@@ -1,0 +1,166 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Sahm Invoicing</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: light SaaS landing page. Headline + live invoice mock, features row, 3 pricing tiers, FAQ */
+:root{--bg:#f2f5f7;--surface:#ffffff;--fg:#0d1b2a;--muted:#55687a;--accent:#ff5a36;--accent-ink:#ffffff;--line:#d9e1e7;--ok:#0f8a5f;color-scheme:light;
+--display:"Manrope",system-ui,sans-serif;--mono:"IBM Plex Mono",ui-monospace,monospace}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#0b141d;--surface:#122130;--fg:#e8eef4;--muted:#97a9b9;--accent:#ff7458;--accent-ink:#1a0a05;--line:#23384b;--ok:#3ccf91;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0b141d;--surface:#122130;--fg:#e8eef4;--muted:#97a9b9;--accent:#ff7458;--accent-ink:#1a0a05;--line:#23384b;--ok:#3ccf91;color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--display);font-size:16px;line-height:1.6;margin:0;
+padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.wrap{max-width:1080px;margin:0 auto}
+nav{display:flex;justify-content:space-between;align-items:center;padding-block:20px;gap:12px}
+.logo{font-weight:800;font-size:22px;letter-spacing:-.03em}.logo b{color:var(--accent)}
+.btn{display:inline-block;background:var(--accent);color:var(--accent-ink);font:inherit;font-weight:700;padding:12px 22px;border-radius:10px;border:0;text-decoration:none;cursor:pointer}
+.btn.ghost{background:transparent;color:var(--fg);border:1.5px solid var(--line)}
+.btn:focus-visible{outline:3px solid var(--fg);outline-offset:3px}
+.hero{display:grid;grid-template-columns:1.1fr 1fr;gap:48px;align-items:center;padding-block:40px 64px}
+.hero>*{min-width:0}
+h1{font-size:clamp(36px,6vw,62px);line-height:1.04;letter-spacing:-.035em;font-weight:800;margin:0 0 18px;text-wrap:balance}
+.lead{color:var(--muted);font-size:18px;max-width:44ch;margin:0 0 26px}
+.cta{display:flex;gap:12px;flex-wrap:wrap}
+.inv{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:24px;box-shadow:0 18px 40px -24px rgba(13,27,42,.35)}
+.inv-top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:18px}
+.inv small{font-family:var(--mono);color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.08em}
+.inv h3{margin:2px 0 0;font-size:18px}
+.pill{font-family:var(--mono);font-size:12px;background:color-mix(in srgb,var(--ok) 16%,transparent);color:var(--ok);padding:4px 10px;border-radius:99px;white-space:nowrap}
+.row{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-top:1px solid var(--line);font-size:15px}
+.row span:last-child{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.total{font-weight:800;font-size:18px}
+h2{font-size:clamp(26px,4vw,38px);letter-spacing:-.03em;margin:0 0 8px;font-weight:800}
+section{padding-block:36px}
+.sec-sub{color:var(--muted);margin:0 0 26px}
+.feats{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:20px}
+.feat{border-top:2px solid var(--fg);padding-top:14px}
+.feat h3{margin:0 0 6px;font-size:18px}.feat p{margin:0;color:var(--muted);font-size:15px}
+.plans{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px}
+.plan{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:26px;display:flex;flex-direction:column;gap:10px}
+.plan.hot{border:2px solid var(--accent)}
+.plan h3{margin:0;font-size:18px}
+.amt{font-size:34px;font-weight:800;letter-spacing:-.03em}.amt small{font-size:14px;font-weight:500;color:var(--muted)}
+.plan ul{margin:0;padding:0;list-style:none;color:var(--muted);font-size:15px;flex:1}
+.plan li{padding:4px 0}
+details{border-top:1px solid var(--line);padding:14px 0}
+summary{cursor:pointer;font-weight:700}
+details p{margin:8px 0 0;color:var(--muted);max-width:60ch}
+footer{border-top:1px solid var(--line);padding-block:26px;color:var(--muted);font-size:13px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.flow{height:260vh;position:relative}
+.flow-in{position:sticky;top:0;min-height:100vh;display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center}
+.flow-in>*{min-width:0}
+.flow h2{margin-bottom:18px}
+.stages{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:14px}
+.stages li{display:grid;grid-template-columns:36px 1fr;gap:12px;align-items:start;opacity:.42;transition:opacity .25s}
+.stages li.on{opacity:1}
+.stages .dot{width:36px;height:36px;border-radius:50%;border:2px solid var(--line);display:grid;place-items:center;font-family:var(--mono);font-size:13px;transition:background .25s,border-color .25s,color .25s}
+.stages li.on .dot{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.stages b{display:block;font-size:17px}
+.stages span{color:var(--muted);font-size:14px}
+.trk{height:6px;border-radius:99px;background:var(--line);overflow:hidden;margin-top:22px;max-width:360px}
+.trk i{display:block;height:100%;width:0;background:var(--accent)}
+.inv2{position:relative;padding-bottom:72px}
+.inv2 .pill{transition:background .25s,color .25s}
+.pill.draft{background:color-mix(in srgb,var(--muted) 18%,transparent);color:var(--muted)}
+.pill.sent{background:color-mix(in srgb,var(--accent) 18%,transparent);color:var(--accent)}
+.rv{opacity:0;transform:translateY(14px)}
+.stamp{position:absolute;right:24px;bottom:16px;font-family:var(--mono);font-weight:500;font-size:22px;letter-spacing:.12em;color:var(--ok);border:3px solid var(--ok);border-radius:8px;padding:4px 14px;opacity:0;transform:rotate(-10deg) scale(1.6);pointer-events:none}
+.paidnote{font-family:var(--mono);font-size:13px;color:var(--muted);margin-top:10px;min-height:1.4em}
+@media(max-width:760px){.flow-in{grid-template-columns:1fr;gap:20px;align-content:center}.stages{flex-direction:row;gap:10px}.stages li{grid-template-columns:1fr;justify-items:start}.stages span{display:none}}
+@media(max-width:760px){.hero{grid-template-columns:1fr;gap:32px}}
+</style>
+<div class="wrap">
+<nav><div class="logo">sahm<b>.</b></div><a class="btn ghost" href="#pricing">Pricing</a></nav>
+<header class="hero">
+<div>
+<h1>Send the invoice. Get paid on time.</h1>
+<p class="lead">Sahm is invoicing for freelancers in Egypt. Bill in EGP or USD, send a payment link, and see who has paid at a glance.</p>
+<div class="cta"><button class="btn" type="button" id="go">Create your first invoice</button><a class="btn ghost" href="#features">See features</a></div>
+<p id="msg" role="status" style="color:var(--muted);font-size:14px;margin:12px 0 0"></p>
+</div>
+<div class="inv" aria-label="Example invoice">
+<div class="inv-top"><div><small>Invoice SH-0042</small><h3>Landing page for Nour Bakery</h3></div><span class="pill">PAID</span></div>
+<div class="row"><span>Design and build</span><span>6,000 EGP</span></div>
+<div class="row"><span>Copywriting</span><span>1,200 EGP</span></div>
+<div class="row"><span>Hosting setup</span><span>400 EGP</span></div>
+<div class="row total"><span>Total</span><span>7,600 EGP</span></div>
+</div>
+</header>
+<div class="flow" id="flow">
+<div class="flow-in">
+<div>
+<h2>From draft to paid, in one scroll</h2>
+<ol class="stages" id="stages">
+<li class="on"><span class="dot">1</span><div><b>Build the invoice</b><span>Add items, Sahm adds up the total.</span></div></li>
+<li><span class="dot">2</span><div><b>Send the link</b><span>Your client gets a payment link by email or WhatsApp.</span></div></li>
+<li><span class="dot">3</span><div><b>Get paid</b><span>The status turns to paid the moment money arrives.</span></div></li>
+</ol>
+<div class="trk" aria-hidden="true"><i id="trk"></i></div>
+</div>
+<div>
+<div class="inv inv2" aria-label="Invoice that fills in as you scroll">
+<div class="inv-top"><div><small>Invoice SH-0043</small><h3>Website for Dar Studio</h3></div><span class="pill draft" id="pill">DRAFT</span></div>
+<div class="row rv"><span>Design and build</span><span>6,000 EGP</span></div>
+<div class="row rv"><span>Copywriting</span><span>1,200 EGP</span></div>
+<div class="row rv"><span>Hosting setup</span><span>400 EGP</span></div>
+<div class="row total rv"><span>Total</span><span id="tot">0 EGP</span></div>
+<div class="stamp" id="stamp">PAID</div>
+</div>
+<div class="paidnote" id="note" role="status"></div>
+</div>
+</div>
+</div>
+<section id="features"><h2>Everything a freelancer bills for</h2><p class="sec-sub">No accounting degree needed.</p>
+<div class="feats">
+<div class="feat"><h3>Two currencies</h3><p>Invoice in EGP or USD and keep the exchange rate you agreed with the client.</p></div>
+<div class="feat"><h3>Payment links</h3><p>Clients pay by card or wallet from the invoice itself.</p></div>
+<div class="feat"><h3>Automatic reminders</h3><p>Sahm nudges late clients so you don't have to.</p></div>
+<div class="feat"><h3>Monthly summary</h3><p>See what you earned, what is pending and what is overdue.</p></div>
+</div></section>
+<section id="pricing"><h2>Simple pricing</h2><p class="sec-sub">Start free. Upgrade when you have regular clients.</p>
+<div class="plans">
+<div class="plan"><h3>Starter</h3><div class="amt">0 <small>EGP / month</small></div><ul><li>3 invoices a month</li><li>PDF download</li><li>1 currency</li></ul></div>
+<div class="plan hot"><h3>Freelancer</h3><div class="amt">149 <small>EGP / month</small></div><ul><li>Unlimited invoices</li><li>Payment links</li><li>Automatic reminders</li><li>EGP and USD</li></ul></div>
+<div class="plan"><h3>Studio</h3><div class="amt">399 <small>EGP / month</small></div><ul><li>Everything in Freelancer</li><li>5 team members</li><li>Monthly reports</li></ul></div>
+</div></section>
+<section><h2>Questions</h2>
+<details><summary>Can I cancel at any time?</summary><p>Yes. Cancel from your account page and you keep access until the end of the month.</p></details>
+<details><summary>Do my clients need an account?</summary><p>No. They open the link, view the invoice and pay.</p></details>
+<details><summary>Can I add my own logo?</summary><p>Yes, on the Freelancer and Studio plans.</p></details>
+</section>
+<footer><span>Sahm, Cairo</span><span>Concept project with a fictional brand, built as a portfolio example.</span></footer>
+</div>
+<script>
+document.getElementById('go').addEventListener('click',function(){document.getElementById('msg').textContent='This is a demo page, so sign-up is switched off.'});
+(function(){
+var box=document.getElementById('flow'),rows=box.querySelectorAll('.rv'),tot=document.getElementById('tot'),
+pill=document.getElementById('pill'),stamp=document.getElementById('stamp'),note=document.getElementById('note'),
+trk=document.getElementById('trk'),steps=box.querySelectorAll('.stages li');
+function clamp(v){return v<0?0:v>1?1:v}
+function seg(p,a,b){return clamp((p-a)/(b-a))}
+function fmt(n){return Math.round(n).toLocaleString('en-US')}
+function draw(p){
+for(var i=0;i<rows.length;i++){var s=seg(p,0.04+i*0.08,0.12+i*0.08);rows[i].style.opacity=s;rows[i].style.transform='translateY('+((1-s)*14)+'px)'}
+tot.textContent=fmt(7600*seg(p,0.12,0.34))+' EGP';
+var st=p<0.38?0:p<0.7?1:2;
+pill.textContent=['DRAFT','SENT','PAID'][st];
+pill.className='pill '+(st===0?'draft':st===1?'sent':'');
+var s=seg(p,0.7,0.78);
+stamp.style.opacity=s;stamp.style.transform='rotate(-10deg) scale('+(1.6-0.6*s)+')';
+note.textContent=st===0?'':st===1?'Payment link sent to the client':'Paid by card, 7,600 EGP received';
+for(var j=0;j<steps.length;j++){steps[j].className=j<=st?'on':''}
+trk.style.width=(p*100)+'%';
+}
+function update(){
+var r=box.getBoundingClientRect(),vh=window.innerHeight||document.documentElement.clientHeight,span=r.height-vh;
+draw(span>0?clamp(-r.top/span):1);
+}
+var last=null;
+function loop(){var r=box.getBoundingClientRect(),k=r.top+'|'+r.height+'|'+window.innerHeight;if(k!==last){last=k;update()}requestAnimationFrame(loop)}
+document.addEventListener('scroll',function(){last=null},{passive:true,capture:true});
+update();loop();
+})();
+</script>
+
+</body></html>
